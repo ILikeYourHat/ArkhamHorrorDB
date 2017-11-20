@@ -18,7 +18,7 @@ class CardAdapter {
                 name = json.name ?: "",
                 subname = json.subname,
                 imageUrl = imageUrl,
-                description = json.text ?: "",
+                description = json.text?.toRichText() ?: "",
                 faction = factionFromJson(json),
                 packId = json.pack_code!!
         )
@@ -37,4 +37,12 @@ class CardAdapter {
         }
     }
 
+
+    private fun String.toRichText(): String {
+        return fixLineBreaks()
+    }
+
+    private fun String.fixLineBreaks(): String {
+        return replace("\n", "<br/>")
+    }
 }

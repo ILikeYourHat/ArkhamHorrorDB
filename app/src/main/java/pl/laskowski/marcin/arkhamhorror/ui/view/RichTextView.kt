@@ -1,15 +1,13 @@
 package pl.laskowski.marcin.arkhamhorror.ui.view
 
 import android.content.Context
-import android.os.Build
 import android.support.v7.widget.AppCompatTextView
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.util.AttributeSet
 import pl.laskowski.marcin.arkhamhorror.ui.misc.CenteredImageSpan
-import pl.laskowski.marcin.arkhamhorror.ui.misc.TextIcon
+import pl.laskowski.marcin.arkhamhorror.util.fromHtml
 
 /**
  * Created by Marcin Laskowski.
@@ -20,7 +18,7 @@ class RichTextView : AppCompatTextView {
     var richText: String = ""
         set(value) {
             field = value
-            text = getFromHtml(value).addIcons()
+            text = fromHtml(value).addIcons()
         }
 
     constructor(context: Context) : super(context)
@@ -29,29 +27,18 @@ class RichTextView : AppCompatTextView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private fun getFromHtml(description: String): Spanned {
-        val fixedDescription = description.replace("\n", "<br/>")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(fixedDescription, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            return Html.fromHtml(fixedDescription)
-        }
-    }
-
     private fun Spanned.addIcons(): Spanned {
+        val builder = SpannableStringBuilder(this)
+
         var index: Int
-        val builder = SpannableStringBuilder()
-        builder.append(this)
-
-        for (entry in TextIcon.values()) {
-            index = this.indexOf(entry.phase)
+        for (symbol in TextSymbol.values()) {
+            val phase = symbol.phase
+            index = indexOf(phase)
             while (index >= 0) {
-                val span = CenteredImageSpan(context, entry.drawable)
-                builder.setSpan(span, index, index + entry.phase.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                index = this.indexOf(entry.phase, index + 1)
+                val icon = CenteredImageSpan(context, symbol.drawable)
+                builder.setSpan(icon, index, index + phase.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                index = indexOf(phase, index + 1)
             }
-
         }
         return builder
     }
