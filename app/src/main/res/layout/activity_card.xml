@@ -34,7 +34,7 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="320dp"/>
 
-            <TextView
+            <pl.laskowski.marcin.arkhamhorror.ui.view.RichTextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
