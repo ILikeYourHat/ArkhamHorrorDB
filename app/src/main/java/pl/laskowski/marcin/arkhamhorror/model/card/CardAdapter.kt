@@ -8,11 +8,11 @@ import com.squareup.moshi.FromJson
  * Senfino 2017
  */
 
-class CardAdapter {
+class CardAdapter(private val url: String) {
 
     @FromJson
     fun fromJson(json: CardJson): Card {
-        val imageUrl = if (json.imagesrc != null) "https://arkhamdb.com" + json.imagesrc else null
+        val imageUrl = if (json.imagesrc != null) url + json.imagesrc else null
         return Card(
                 id = json.code!!,
                 name = json.name ?: "",

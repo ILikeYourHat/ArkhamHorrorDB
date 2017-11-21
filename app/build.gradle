@@ -18,6 +18,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions("backend")
+    productFlavors {
+        prod {
+            buildConfigField 'String', 'BACKEND_URL', '"https://arkhamdb.com"'
+        }
+    }
 }
 
 kapt {

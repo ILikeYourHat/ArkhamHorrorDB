@@ -3,9 +3,8 @@ package pl.laskowski.marcin.arkhamhorror.ui.framework
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import pl.laskowski.marcin.arkhamhorror.component
 import pl.laskowski.marcin.arkhamhorror.dependency.AppComponent
-import pl.laskowski.marcin.arkhamhorror.dependency.AppModule
-import pl.laskowski.marcin.arkhamhorror.dependency.DaggerAppComponent
 import pl.laskowski.marcin.arkhamhorror.ui.navigation.ActivityRouter
 
 /**
@@ -19,10 +18,7 @@ abstract class BaseActivity<out Presenter : BasePresenter<BaseUi>>(
 
     protected val presenter: Presenter by lazy {
         val router = ActivityRouter(this)
-        val component = DaggerAppComponent.builder()
-                .appModule(AppModule(application))
-                .build()
-        providePresenter(router, component)
+        providePresenter(router, component())
     }
 
     abstract fun providePresenter(router: ActivityRouter, component: AppComponent): Presenter

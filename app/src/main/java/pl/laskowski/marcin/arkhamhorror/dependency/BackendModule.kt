@@ -23,7 +23,7 @@ import javax.inject.Singleton
  */
 
 @Module
-class BackendModule {
+class BackendModule(val url: String) {
 
     @Provides
     @Singleton
@@ -36,7 +36,7 @@ class BackendModule {
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
                 .client(client)
-                .baseUrl("https://arkhamdb.com")
+                .baseUrl(url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
@@ -46,14 +46,14 @@ class BackendModule {
     @Singleton
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
-                .add(CardAdapter())
+                .add(CardAdapter(url))
                 .add(PackAdapter())
                 .build()
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor, cache: Cache): OkHttpClient {
+    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor, cache: Cache?): OkHttpClient {
         return OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .cache(cache)
@@ -69,8 +69,8 @@ class BackendModule {
 
     @Provides
     @Singleton
-    fun provideCache(@Named("cacheDirectory") cacheDirectory: File): Cache {
-        return Cache(cacheDirectory, 50 * 1024 * 1024)
+    fun provideCache(@Named("cacheDirectory") cacheDirectory: File): Cache? {
+        return Cache(cacheDirectory, 20 * 1024 * 1024)
     }
 
     @Provides

@@ -29,7 +29,6 @@ class ApiRepository
     fun getCardsFromPack(pack: Pack): Single<List<Card>> {
         return api.getCards()
                 .flatMapObservable { Observable.fromIterable(it) }
-                .map { CardAdapter().fromJson(it) }
                 .filter { card -> card.packId == pack.id }
                 .toList()
     }
