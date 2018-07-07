@@ -11,10 +11,10 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = arrayOf(
-        BackendModule::class,
-        AppModule::class
-))
+@Component(modules = [
+    (BackendModule::class),
+    (AppModule::class)
+])
 interface AppComponent {
 
     fun repository(): ApiRepository

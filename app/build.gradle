@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "pl.laskowski.marcin.arkhamhorror"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -28,33 +29,40 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
+
+    def vAndroidSupport = "27.1.1"
+    def vRetrofit = "2.3.0"
+    def vOkHttp = "3.10.0"
+    def vPicasso = "2.71828"
+    def vDagger = "2.16"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
+    implementation "com.android.support:appcompat-v7:$vAndroidSupport"
+    implementation "com.android.support:recyclerview-v7:$vAndroidSupport"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.squareup.moshi:moshi:1.5.0'
-    implementation 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.google.dagger:dagger:2.12'
-    kapt 'com.google.dagger:dagger-compiler:2.12'
+    implementation "com.squareup.retrofit2:retrofit:$vRetrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$vRetrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$vRetrofit"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:$vOkHttp"
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.squareup.moshi:moshi:1.6.0'
+    implementation "com.squareup.picasso:picasso:$vPicasso"
+    implementation "com.google.dagger:dagger:$vDagger"
+    kapt "com.google.dagger:dagger-compiler:$vDagger"
 
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-annotations:$vAndroidSupport"
+        resolutionStrategy.force "com.android.support:exifinterface:$vAndroidSupport"
+    }
 
 }

@@ -23,7 +23,7 @@ import javax.inject.Singleton
  */
 
 @Module
-class BackendModule(val url: String) {
+class BackendModule(private val url: String) {
 
     @Provides
     @Singleton

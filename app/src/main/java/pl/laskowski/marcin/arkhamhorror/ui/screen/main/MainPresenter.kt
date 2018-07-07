@@ -22,7 +22,7 @@ class MainPresenter(ui: MainUi, router: Router, component: AppComponent)
         api.getAllPacks()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ packs -> ui.onPacksReady(packs) })
+                .subscribe { packs -> ui.onPacksReady(packs) }
     }
 
     fun onPackClicked(pack: Pack) {

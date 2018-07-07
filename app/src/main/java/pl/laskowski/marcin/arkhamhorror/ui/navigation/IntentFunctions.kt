@@ -9,8 +9,8 @@ import pl.laskowski.marcin.arkhamhorror.model.pack.Pack
  * Senfino 2017
  */
 
-private val packKey = "pack"
-private val cardKey = "card"
+private const val packKey = "pack"
+private const val cardKey = "card"
 
 fun Intent.getPack(): Pack {
     return this.getSerializableExtra(packKey) as Pack
