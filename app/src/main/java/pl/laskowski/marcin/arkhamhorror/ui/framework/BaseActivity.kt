@@ -3,6 +3,7 @@ package pl.laskowski.marcin.arkhamhorror.ui.framework
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import pl.laskowski.marcin.arkhamhorror.component
 import pl.laskowski.marcin.arkhamhorror.dependency.AppComponent
 import pl.laskowski.marcin.arkhamhorror.ui.navigation.ActivityRouter
@@ -47,6 +48,10 @@ abstract class BaseActivity<out Presenter : BasePresenter<BaseUi>>(
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+    }
+
+    override fun showExceptionMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

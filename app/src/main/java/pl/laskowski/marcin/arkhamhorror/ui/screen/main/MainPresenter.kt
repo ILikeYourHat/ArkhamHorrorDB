@@ -1,7 +1,5 @@
 package pl.laskowski.marcin.arkhamhorror.ui.screen.main
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import pl.laskowski.marcin.arkhamhorror.dependency.AppComponent
 import pl.laskowski.marcin.arkhamhorror.model.pack.Pack
 import pl.laskowski.marcin.arkhamhorror.ui.framework.BasePresenter
@@ -19,10 +17,7 @@ class MainPresenter(ui: MainUi, router: Router, component: AppComponent)
 
     override fun onCreate() {
         super.onCreate()
-        api.getAllPacks()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { packs -> ui.onPacksReady(packs) }
+        execute(api.getAllPacks(), ui::onPacksReady)
     }
 
     fun onPackClicked(pack: Pack) {

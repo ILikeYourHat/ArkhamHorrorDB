@@ -1,7 +1,5 @@
 package pl.laskowski.marcin.arkhamhorror.ui.screen.pack
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import pl.laskowski.marcin.arkhamhorror.dependency.AppComponent
 import pl.laskowski.marcin.arkhamhorror.model.card.Card
 import pl.laskowski.marcin.arkhamhorror.model.pack.Pack
@@ -25,10 +23,7 @@ class PackPresenter(ui: PackUi, router: Router, component: AppComponent)
     }
 
     private fun syncCards() {
-        api.getCardsFromPack(pack)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ cards -> ui.onCardsReady(cards) })
+        execute(api.getCardsFromPack(pack), ui::onCardsReady)
     }
 
     fun onCardClicked(card: Card) {

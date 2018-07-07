@@ -9,21 +9,21 @@ import pl.laskowski.marcin.arkhamhorror.model.pack.Pack
  * Senfino 2017
  */
 
-private const val packKey = "pack"
-private const val cardKey = "card"
+private const val KEY_PACK = "pack"
+private const val KEY_CARD = "card"
 
 fun Intent.getPack(): Pack {
-    return this.getSerializableExtra(packKey) as Pack
+    return this.getSerializableExtra(KEY_PACK) as Pack
 }
 
 fun Intent.putPack(pack: Pack) {
-    this.putExtra(packKey, pack)
+    this.putExtra(KEY_PACK, pack)
 }
 
 fun Intent.getCard(): Card {
-    return this.getSerializableExtra(cardKey) as Card
+    return this.getSerializableExtra(KEY_CARD) as Card
 }
 
 fun Intent.putCard(card: Card) {
-    this.putExtra(cardKey, card)
+    this.putExtra(KEY_CARD, card)
 }
